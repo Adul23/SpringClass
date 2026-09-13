@@ -1,0 +1,6 @@
+server:
+  port: 8081
+
+app:
+  message: Hello from TEST
+  debug-enabled: false
