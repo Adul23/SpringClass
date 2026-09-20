@@ -3,7 +3,7 @@ package com.example.spring_class.config;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @ConfigurationProperties(prefix = "app")
-public record AppConfig(
+public record AppProperties(
         String name,
         String message,
         int maxUsers,

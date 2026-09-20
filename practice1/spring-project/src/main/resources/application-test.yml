@@ -4,3 +4,7 @@ server:
 app:
   message: Hello from TEST
   debug-enabled: false
+# can be commented
+springdoc:
+  swagger-ui:
+    enabled: false
