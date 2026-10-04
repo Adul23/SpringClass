@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.Date;
-
+import org.springframework.format.annotation.DateTimeFormat;
 
 @RestController
 public class ExampleController{
@@ -18,7 +18,9 @@ public class ExampleController{
         this.exampleService = exampleService;
     }
     @GetMapping("/dateOfWeek")
-    public DayOfWeek getDate(@RequestParam LocalDate date){
+    public DayOfWeek getDate(
+            @RequestParam("date")
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         return exampleService.getDayOfTheWeek(date);
     }
 
