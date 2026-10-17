@@ -2,6 +2,32 @@ spring:
   application:
     name: spring_class
 
+  profiles:
+    active: dev
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+    defer-datasource-initialization: false
+
+  sql:
+    init:
+      mode: never
+
+  flyway:
+    enabled: true
+    baseline-on-migrate: false
+    locations:
+      - classpath:db/migration
+      - classpath:db/demo
+
+  data:
+    web:
+      pageable:
+        default-page-size: 10
+        max-page-size: 100
+
 app:
   name: spring_class
   max-users: 100

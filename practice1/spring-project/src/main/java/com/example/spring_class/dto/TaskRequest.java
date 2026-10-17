@@ -1,5 +1,6 @@
 package com.example.spring_class.dto;
 
+import com.example.spring_class.models.Project;
 import com.example.spring_class.models.TaskStatus;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -14,6 +15,8 @@ public record TaskRequest(
         String description,
 
         @NotNull(message = "Status is required")
-        TaskStatus status
+        TaskStatus status,
+
+        Long projectId
 ) {
 }

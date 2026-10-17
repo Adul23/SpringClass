@@ -1,6 +1,21 @@
 server:
   port: 8080
 
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/demo_db
+    username: ${DEV_DB_USERNAME}
+    password: ${DEV_DB_PASSWORD}
+
+  flyway:
+    enabled: true
+    default-schema: public
+    baseline-on-migrate: false
+    baseline-version: "1"
+    locations:
+      - classpath:db/migration
+      - classpath:db/demo
+
 app:
   message: Hello from DEV
   debug-enabled: true

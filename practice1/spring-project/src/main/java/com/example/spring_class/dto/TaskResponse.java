@@ -8,7 +8,7 @@ public record TaskResponse(
 ) {
     public static TaskResponse from(Task task) {
         return new TaskResponse(
-                task.id(), task.title(), task.description(), task.status()
+                task.getId(), task.getTitle(), task.getDescription(), task.getStatus()
         );
     }
 }
