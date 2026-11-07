@@ -1,5 +1,6 @@
-package com.example.spring_class.exceptions;
+package com.example.spring_class.task.web.error;
 
+import com.example.spring_class.exceptions.ResourceNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.http.HttpHeaders;
@@ -122,4 +123,23 @@ public class GlobalExceptionHandler {
                 .headers(headers)
                 .body(error);
     }
+
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<ApiError> handleIllegalArgument(
+            IllegalArgumentException ex,
+            HttpServletRequest request
+    ) {
+        ApiError error = new ApiError(
+                Instant.now(),
+                400,
+                "Bad Request",
+                ex.getMessage(),
+                request.getRequestURI(),
+                new HashMap<>()
+        );
+
+        return ResponseEntity.badRequest().body(error);
+    }
+
 }

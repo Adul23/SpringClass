@@ -1,7 +1,6 @@
-package com.example.spring_class.dto;
+package com.example.spring_class.task.web.dto;
 
-import com.example.spring_class.models.Project;
-import com.example.spring_class.models.TaskStatus;
+import com.example.spring_class.task.domain.model.TaskStatus;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;

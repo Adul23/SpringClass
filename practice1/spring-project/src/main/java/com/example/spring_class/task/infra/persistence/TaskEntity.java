@@ -1,12 +1,13 @@
-package com.example.spring_class.models;
+package com.example.spring_class.task.infra.persistence;
 
+import com.example.spring_class.task.domain.model.TaskStatus;
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "tasks")
-public class Task {
+public class TaskEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
     @Column(name="title", nullable = false, length = 100)
     private String title;
 
@@ -17,16 +18,16 @@ public class Task {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 255)
-    TaskStatus status;
+    private TaskStatus status;
 
 
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "project_id")
-    private Project project;
+    private ProjectEntity projectEntity;
 
 
-    public Task(){
+    public TaskEntity(){
 
     }
 
@@ -57,11 +58,11 @@ public class Task {
     public Long getId() {
         return id;
     }
-    public Project getProject() {
-        return project;
+    public ProjectEntity getProject() {
+        return projectEntity;
     }
 
-    public void setProject(Project project) {
-        this.project = project;
+    public void setProject(ProjectEntity projectEntity) {
+        this.projectEntity = projectEntity;
     }
 }

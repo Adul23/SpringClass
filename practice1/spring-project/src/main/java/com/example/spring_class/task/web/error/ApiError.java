@@ -1,4 +1,4 @@
-package com.example.spring_class.exceptions;
+package com.example.spring_class.task.web.error;
 
 import java.time.Instant;
 import java.util.List;

@@ -10,6 +10,11 @@ spring:
       ddl-auto: validate
     open-in-view: false
     defer-datasource-initialization: false
+    show-sql: true
+
+  logging:
+    level:
+      com.example: DEBUG
 
   sql:
     init:
