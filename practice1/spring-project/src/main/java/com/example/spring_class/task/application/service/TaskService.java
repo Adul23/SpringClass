@@ -4,6 +4,7 @@ import com.example.spring_class.exceptions.ResourceNotFoundException;
 import com.example.spring_class.task.domain.model.Task;
 import com.example.spring_class.task.domain.model.TaskStatus;
 import com.example.spring_class.task.domain.repository.TaskRepository;
+import org.springframework.cache.annotation.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -12,7 +13,10 @@ import com.example.spring_class.task.domain.repository.ProjectRepository;
 
 @Service
 @Transactional(readOnly = true)
+@CacheConfig(cacheNames = "tasks")
 public class TaskService {
+    public static final String TASK_CACHE = "task";
+    public static final String TASK_PAGES_CACHE = "taskPages";
     private final TaskRepository tasks;
     private final ProjectRepository projects;
     public TaskService(
@@ -22,23 +26,29 @@ public class TaskService {
         this.tasks = tasks;
         this.projects = projects;
     }
+    @Cacheable(cacheNames = TASK_PAGES_CACHE, key = "'all:' + #pageable")
     public Page<Task> findAll(Pageable pageable){
         return tasks.findAll(pageable);
     }
+    @Cacheable(cacheNames = TASK_PAGES_CACHE, key = "'status:' + #status + ':' + #pageable")
     public Page<Task> findByStatus(
             TaskStatus status,
             Pageable pageable
     ){
         return tasks.findByStatus(status, pageable);
     }
+    @Cacheable(cacheNames = TASK_PAGES_CACHE, key = "'title:' + #title + ':' + #pageable")
     public Page<Task> searchByTitle(
             String title,
             Pageable pageable
     ) {
         return tasks.findByTitleContaining(title, pageable);
     }
-
     @Transactional
+    @Caching(
+            put = @CachePut(cacheNames = TASK_CACHE, key = "#result.id"),
+            evict = @CacheEvict(cacheNames = TASK_PAGES_CACHE, allEntries = true)
+    )
     public Task create(Task task){
         if (task.getId() != null){
             throw new IllegalArgumentException(
@@ -50,6 +60,10 @@ public class TaskService {
     }
 
     @Transactional
+    @Caching(
+            put = @CachePut(cacheNames = TASK_CACHE, key = "#id"),
+            evict = @CacheEvict(cacheNames = TASK_PAGES_CACHE, allEntries = true)
+    )
     public Task update(
             long id,
             String title,
@@ -64,6 +78,10 @@ public class TaskService {
     }
 
     @Transactional
+    @Caching(
+            put = @CachePut(cacheNames = TASK_CACHE, key = "#id"),
+            evict = @CacheEvict(cacheNames = TASK_PAGES_CACHE, allEntries = true)
+    )
     public void delete(
             long id
     ){
@@ -81,7 +99,7 @@ public class TaskService {
                         "Project " + projectId + " was not found"
                 ));
     }
-
+    @Cacheable(cacheNames = TASK_PAGES_CACHE, key = "'id' + ':' + #id")
     public Task findById(long id){
         return requireTask(id);
     }

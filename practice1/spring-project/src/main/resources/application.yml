@@ -5,6 +5,11 @@ spring:
   profiles:
     active: dev
 
+  cache:
+    type: caffeine
+    cache-names: tasks
+    caffeine:
+      spec: maximumSize=500,expireAfterWrite=10m
   jpa:
     hibernate:
       ddl-auto: validate
@@ -15,6 +20,7 @@ spring:
   logging:
     level:
       com.example: DEBUG
+      timing: DEBUG
 
   sql:
     init:
