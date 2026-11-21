@@ -7,7 +7,7 @@ spring:
 
   cache:
     type: caffeine
-    cache-names: tasks
+    cache-names: task, taskPages
     caffeine:
       spec: maximumSize=500,expireAfterWrite=10m
   jpa:
@@ -39,6 +39,14 @@ spring:
         default-page-size: 10
         max-page-size: 100
 
+  http:
+    clients:
+      connect-timeout: 1s
+      read-timeout: 2s
+
 app:
   name: spring_class
   max-users: 100
+
+holidays:
+  base-url: https://date.nager.at

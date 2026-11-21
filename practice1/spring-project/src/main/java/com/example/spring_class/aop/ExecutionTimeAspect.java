@@ -16,7 +16,7 @@ import java.util.Arrays;
 
 @Aspect
 @Component
-@Order(Ordered.HIGHEST_PRECEDENCE)
+@Order(0)
 public class ExecutionTimeAspect {
 
     private static final Logger log = LoggerFactory.getLogger("timing");
